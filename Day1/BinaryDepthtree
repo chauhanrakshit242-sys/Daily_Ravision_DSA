@@ -1,0 +1,57 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class TreeNode {
+public:
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int val) {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+TreeNode* buildTree() {
+
+    int data;
+    cout << "Enter data (-1 for NULL): ";
+    cin >> data;
+
+    if(data == -1)
+        return NULL;
+
+    TreeNode* root = new TreeNode(data);
+
+    cout << "Enter left child of " << data << endl;
+    root->left = buildTree();
+
+    cout << "Enter right child of " << data << endl;
+    root->right = buildTree();
+
+    return root;
+}
+
+int maxDepth(TreeNode* root) {
+
+    if(root == NULL)
+        return 0;
+
+    int leftDepth = maxDepth(root->left);
+    int rightDepth = maxDepth(root->right);
+
+    return 1 + max(leftDepth, rightDepth);
+}
+
+int main() {
+
+    TreeNode* root = buildTree();
+
+    cout << "\nMaximum Depth = "
+         << maxDepth(root) << endl;
+
+    return 0;
+}
